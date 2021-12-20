@@ -18,12 +18,17 @@ export const Home: FC = () => {
     const regex = new RegExp('^' + event.target.value, 'i')
     matchedCity = event.target.value ? data.cities.cities.filter((city: city) => city.name.match(regex)) : []
     setCities(matchedCity)
+    setInputText(event.target.value)
   }
 
   const clearSearch = () => {
     setCities([])
     setInputText('')
   }
+
+  if (error) return <p>{error.message}</p>
+  if (loading) return <p>Loading...</p>
+
   return (
     <VStack spacing="8">
       <Heading as="h1">Smart traveller</Heading>

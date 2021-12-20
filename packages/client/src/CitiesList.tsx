@@ -5,7 +5,7 @@ import { ArrowRightIcon } from '@chakra-ui/icons'
 import type { city } from './types'
 import { useMutation, gql } from '@apollo/client'
 
-const UPDATE_CITY = gql`
+export const UPDATE_CITY = gql`
   mutation UpdateCity($id: Int, $visited: Boolean, $wishlist: Boolean) {
     updateCity(input: { id: $id, visited: $visited, wishlist: $wishlist }) {
       id
@@ -35,14 +35,24 @@ const CitiesList: FC<{ cities: city[]; clearSearch: Function }> = props => {
         const cityId = city.id + ''
 
         return (
-          <ListItem>
-            <ListIcon as={ArrowRightIcon} color="green.500" />
+          <ListItem key={cityId}>
+            <ListIcon as={ArrowRightIcon} color="green.500" key={`icon${cityId}`} />
             <b>{city.name}</b>
-            <Checkbox isChecked={city.visited} onChange={visitedClickHandler} id={cityId} ml="1rem" colorScheme="green">
+            <Checkbox
+              isChecked={city.visited}
+              key={`visited${cityId}`}
+              data-testid={`visited${cityId}`}
+              onChange={visitedClickHandler}
+              id={cityId}
+              ml="1rem"
+              colorScheme="green"
+            >
               Visited
             </Checkbox>
             <Checkbox
               isChecked={city.wishlist}
+              key={`wishlist${cityId}`}
+              data-testid={`wishlist${cityId}`}
               onChange={wishlistClickHandler}
               id={cityId}
               ml="1rem"
